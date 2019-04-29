@@ -93,7 +93,10 @@ class _AuthenState extends State<Authen> {
                     ),
                   ),
                   Expanded(
-                    child: SignupBotto(),
+                    child: Container(
+                      margin: EdgeInsets.only(right: 5.0),
+                      child: SignupBotto(),
+                    ),
                   )
                 ],
               ),
