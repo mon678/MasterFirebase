@@ -87,7 +87,10 @@ class _AuthenState extends State<Authen> {
               child: Row(
                 children: <Widget>[
                   Expanded(
-                    child: signInBotton(),
+                    child: Container(
+                      margin: EdgeInsets.only(right: 4.0),
+                      child: signInBotton(),
+                    ),
                   ),
                   Expanded(
                     child: SignupBotto(),
