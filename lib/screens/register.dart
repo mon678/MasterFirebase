@@ -8,6 +8,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
 //Explicit
   final formKey = GlobalKey<FormState>();
+  String nameString, emailString, passwordString;
 
   Widget passwordTextFormField() {
     return TextFormField(
@@ -25,6 +26,9 @@ class _RegisterState extends State<Register> {
         if (value.length <= 5) {
           return 'กรุณากรอกให้ครบ 6 ตัวอักษร';
         }
+      },
+      onSaved: (String value) {
+        passwordString = value;
       },
     );
   }
@@ -48,6 +52,9 @@ class _RegisterState extends State<Register> {
           return 'กรุณากรอกรูปแบบ Email';
         }
       },
+      onSaved: (String value) {
+        emailString = value;
+      },
     );
   }
 
@@ -68,6 +75,9 @@ class _RegisterState extends State<Register> {
           return 'Please Fill Name In The Blank';
         }
       },
+      onSaved: (String value) {
+        nameString = value;
+      },
     );
   }
 
@@ -77,7 +87,10 @@ class _RegisterState extends State<Register> {
       tooltip: 'Upload To Firebase',
       onPressed: () {
         print('You Click Upload');
-        if (formKey.currentState.validate()) {}
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          print('name = $nameString, email=$emailString, password= $passwordString');
+        }
       },
     );
   }
