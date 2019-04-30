@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:monfirebase/screens/register.dart';
 
 class Authen extends StatefulWidget {
   @override
@@ -8,12 +9,18 @@ class Authen extends StatefulWidget {
 }
 
 class _AuthenState extends State<Authen> {
-  Widget SignupBotto() {
-    return RaisedButton(
+  Widget SignupBotto(BuildContext context) {
+    return RaisedButton.icon(
+      icon: Icon(Icons.android),
+      label: Text('Sign Up'),
       color: Colors.orange[200],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      child: Text('Sign up'),
-      onPressed: () {},
+      onPressed: () {
+        print('You click sign up');
+        var registerRoute =
+            MaterialPageRoute(builder: (BuildContext context) => Register());
+        Navigator.of(context).push(registerRoute);
+      },
     );
   }
 
@@ -36,8 +43,8 @@ class _AuthenState extends State<Authen> {
 
   Widget emailTextFormfield() {
     return TextFormField(
-      decoration:
-          InputDecoration(labelText: 'จดหมายอิเล็กทรอนิกส์:', hintText: 'you@email.com'),
+      decoration: InputDecoration(
+          labelText: 'จดหมายอิเล็กทรอนิกส์:', hintText: 'you@email.com'),
     );
   }
 
@@ -95,7 +102,7 @@ class _AuthenState extends State<Authen> {
                   Expanded(
                     child: Container(
                       margin: EdgeInsets.only(right: 5.0),
-                      child: SignupBotto(),
+                      child: SignupBotto(context),
                     ),
                   )
                 ],

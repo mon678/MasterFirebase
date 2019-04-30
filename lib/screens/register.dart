@@ -51,11 +51,23 @@ class _RegisterState extends State<Register> {
     );
   }
 
+  Widget upLoadButton() {
+    return IconButton(
+      icon: Icon(Icons.cloud_upload),
+      tooltip: 'UpLoad To Firebase',
+      onPressed: () {
+        print('You click upload');
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[1000],
         title: Text('Register'),
+        actions: <Widget>[upLoadButton()],
       ),
       body: Container(
         decoration: BoxDecoration(
