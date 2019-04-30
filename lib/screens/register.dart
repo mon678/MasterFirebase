@@ -6,6 +6,9 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+//Explicit
+  final formKey = GlobalKey<FormState>();
+
   Widget passwordTextFormField() {
     return TextFormField(
       decoration: InputDecoration(
@@ -18,6 +21,11 @@ class _RegisterState extends State<Register> {
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
               borderSide: BorderSide(width: 1.0, color: Colors.grey))),
+      validator: (String value) {
+        if (value.length <= 5) {
+          return 'กรุณากรอกให้ครบ 6 ตัวอักษร';
+        }
+      },
     );
   }
 
@@ -33,6 +41,13 @@ class _RegisterState extends State<Register> {
             Icons.email,
             color: Colors.green,
           )),
+      validator: (String value) {
+        if (value.length == 0) {
+          return 'กรุณากรอก Email ';
+        } else if (!((value.contains('@')) && (value.contains('.')))) {
+          return 'กรุณากรอกรูปแบบ Email';
+        }
+      },
     );
   }
 
@@ -48,15 +63,21 @@ class _RegisterState extends State<Register> {
             Icons.face,
             color: Colors.red,
           )),
+      validator: (String value) {
+        if (value.length == 0) {
+          return 'Please Fill Name In The Blank';
+        }
+      },
     );
   }
 
-  Widget upLoadButton() {
+  Widget uploadButton() {
     return IconButton(
       icon: Icon(Icons.cloud_upload),
-      tooltip: 'UpLoad To Firebase',
+      tooltip: 'Upload To Firebase',
       onPressed: () {
-        print('You click upload');
+        print('You Click Upload');
+        if (formKey.currentState.validate()) {}
       },
     );
   }
@@ -64,29 +85,31 @@ class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue[1000],
-        title: Text('Register'),
-        actions: <Widget>[upLoadButton()],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: RadialGradient(
-                colors: [Colors.white, Colors.blue[900]],
-                radius: 4.3,
-                center: Alignment(-1, -1))),
-        padding: EdgeInsets.all(50.0),
-        child: Column(
-          children: <Widget>[
-            nameTextFormField(),
-            Container(
-              margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
-              child: emailTextFormField(),
-            ),
-            passwordTextFormField()
-          ],
+        appBar: AppBar(
+          backgroundColor: Colors.blue[900],
+          title: Text('Register'),
+          actions: <Widget>[uploadButton()],
         ),
-      ),
-    );
+        body: Form(
+          key: formKey,
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.white, Colors.purple[900]],
+                    radius: 1.5,
+                    center: Alignment(0, -1))),
+            padding: EdgeInsets.all(50.0),
+            child: Column(
+              children: <Widget>[
+                nameTextFormField(),
+                Container(
+                  margin: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                  child: emailTextFormField(),
+                ),
+                passwordTextFormField()
+              ],
+            ),
+          ),
+        ));
   }
 }
