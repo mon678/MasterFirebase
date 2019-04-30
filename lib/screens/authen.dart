@@ -37,13 +37,13 @@ class _AuthenState extends State<Authen> {
   Widget emailTextFormfield() {
     return TextFormField(
       decoration:
-          InputDecoration(labelText: 'Email:', hintText: 'you@email.com'),
+          InputDecoration(labelText: 'จดหมายอิเล็กทรอนิกส์:', hintText: 'you@email.com'),
     );
   }
 
   Widget showAppName() {
     return Text(
-      'Master Flutter นามสกุล',
+      'ระบบ Master Flutter',
       style: TextStyle(
           fontFamily: 'Itim-Regular',
           fontSize: 35.0,
