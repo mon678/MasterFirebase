@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class Register extends StatefulWidget {
   @override
   _RegisterState createState() => _RegisterState();
@@ -11,6 +10,11 @@ class _RegisterState extends State<Register> {
 //Explicit
   final formKey = GlobalKey<FormState>();
   String nameString, emailString, passwordString;
+  //For Firebase
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+// For SnackBar
+  final snackBarKey = GlobalKey<ScaffoldState>();
 
   Widget passwordTextFormField() {
     return TextFormField(
@@ -41,7 +45,7 @@ class _RegisterState extends State<Register> {
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
               borderSide: BorderSide(width: 1.0, color: Colors.grey)),
-          labelText: 'Email :',
+          labelText: 'Email123 :',
           hintText: 'you@email.com',
           icon: Icon(
             Icons.email,
@@ -59,9 +63,6 @@ class _RegisterState extends State<Register> {
       },
     );
   }
-
-
-
 
   Widget nameTextFormField() {
     return TextFormField(
@@ -94,15 +95,44 @@ class _RegisterState extends State<Register> {
         print('You Click Upload');
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          print('name = $nameString, email=$emailString, password= $passwordString');
+          print(
+              'name = $nameString, email=$emailString, password= $passwordString');
+          uploadValueToFirebase();
         }
       },
     );
   }
 
+  void uploadValueToFirebase() async {
+    FirebaseUser firebaseUser = await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passwordString)
+        .then((user) {
+      print('Register Success with ===>> $user');
+    }).catchError((error) {
+      String errorString = error.message;
+      print('have error ====>> $errorString');
+      showSnackBar(errorString);
+    });
+  }
+
+  void showSnackBar(String messageString) {
+    SnackBar snackBar = SnackBar(
+      duration: Duration(seconds: 10),
+      backgroundColor: Colors.red,
+      content: Text(messageString),
+      action: SnackBarAction(
+        label: 'Close',onPressed: (){},
+      ),
+    );
+
+    snackBarKey.currentState.showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: snackBarKey,
         appBar: AppBar(
           backgroundColor: Colors.blue[900],
           title: Text('Register'),

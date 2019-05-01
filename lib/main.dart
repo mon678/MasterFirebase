@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Master Firbase',
       home: Authen(),
+      //home: Register(),
     );
   }
 }
