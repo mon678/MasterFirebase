@@ -16,6 +16,9 @@ class _AuthenState extends State<Authen> {
   String titleEmailFalse = 'กรุณากรอกรูปแบบที่กำหนด';
   String titlePasswordFale = 'รหัสต้องมีมากกว่า 6 ตัวอักษร';
 
+  // Explicit ประกาศตัวแปรที่ไม่กำหนดค่า
+  String emailString, passwordString;
+
   Widget SignupBotto(BuildContext context) {
     return RaisedButton.icon(
       icon: Icon(Icons.android),
@@ -39,7 +42,10 @@ class _AuthenState extends State<Authen> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
         print('You click SignIn');
-        if (formKey.currentState.validate()) {}
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          print('email===>> $emailString, password==>> $passwordString');
+        }
       },
     );
   }
@@ -48,11 +54,15 @@ class _AuthenState extends State<Authen> {
     return TextFormField(
       obscureText: true,
       decoration:
-          InputDecoration(labelText: 'รหัสผ่าน:', hintText: 'ความยาว 6 ตัว'),validator: (String value){
-            if (value.length<=5) {
-              return titlePasswordFale;
-            }
-          },
+          InputDecoration(labelText: 'รหัสผ่าน:', hintText: 'ความยาว 6 ตัว'),
+      validator: (String value) {
+        if (value.length <= 5) {
+          return titlePasswordFale;
+        }
+      },
+      onSaved: (String value) {
+        passwordString = value;
+      },
     );
   }
 
@@ -66,6 +76,9 @@ class _AuthenState extends State<Authen> {
         } else if (!((value.contains('@')) && (value.contains('.')))) {
           return titleEmailFalse;
         }
+      },
+      onSaved: (String value) {
+        emailString = value;
       },
     );
   }
